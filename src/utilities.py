@@ -3,10 +3,7 @@
 
 import os
 import SimpleITK as sitk
-import numpy as np
 import pandas as pd
-import pickle
-
 
 def get_dataset(data):
     """
@@ -70,30 +67,6 @@ def results_to_df(data, tag, columns):
     data.columns = columns
     data['tag'] = tag
     return data
-    
-# crop and zero_pad mri image to 96 * 576 * 576
-# crop and zero_pad ct image to 256 * 512 * 512
-def resize_data(data, target_size, ct='False'):
-    
-    if ct != 'True':
-        h_crop = (data.shape[1] - target_size[1]) // 2
-        w_crop = (data.shape[2] - target_size[2]) // 2
-        data = data[:, h_crop : h_crop + target_size[1], w_crop : w_crop + target_size[2]]
-
-    if data.shape[0] < target_size[0]:
-        padding = np.zeros([target_size[0] - data.shape[0], *target_size[1:]], dtype='uint8')
-    #     print(data.shape, padding.shape)
-        data = np.concatenate((data, padding), axis=0)        
-    elif data.shape[0] > target_size[0]:
-        data = data[: target_size[0], :, :]
-    
-    return data
-
-# # tests
-# data = np.ones([3, 10, 10])
-# target = resize_data(data, np.array([4, 2, 2]))
-# assert np.alltrue(target.shape == np.array([4, 2, 2]))
-# assert np.alltrue(target == np.array([[[1., 1.],[1., 1.]], [[1., 1.], [1., 1.]], [[1., 1.], [1., 1.]], [[0., 0.], [0., 0.]]]))
 
 def save_nrrd(data, ref_image, path, filename):
     """
@@ -116,21 +89,6 @@ def save_nrrd(data, ref_image, path, filename):
     if not os.path.exists(path):
         os.makedirs(path, exist_ok=True)
     sitk.WriteImage(image, f'{path}/{filename}.nrrd')
-    
-def save_pickle(data, path, filename):
-    if not os.path.exists(path):
-        os.makedirs(path, exist_ok=True)
-    with open(f'{path}/{filename}.pkl', "wb") as f:
-        pickle.dump(data, f)
-    assert os.path.isfile(f'{path}/{filename}.pkl'), "Image data are not saved."
-
-
-def normalize_data(data):
-    mean = np.mean(data, axis=(1, 2), keepdims=True)
-    std = np.std(data, axis=(1, 2), keepdims=True)
-    data_norm = (data - mean) / (std + 1e-10) 
-    return data_norm
-
     
 def hms_string(sec_elapsed):
     """

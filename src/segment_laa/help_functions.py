@@ -102,6 +102,7 @@ def get_norm(p):
     -----------
     p: np.ndarray
         the vector
+        
     Returns:
     --------
     float

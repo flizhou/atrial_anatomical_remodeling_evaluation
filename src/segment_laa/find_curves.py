@@ -70,7 +70,7 @@ def decide_curves(rotate_data, rotate_ind, spacing, RESOLUTION):
     rotate_data: np.ndarray
         rotated image data 
     rotate_ind: np.ndarray
-        rotated point index
+        rotated object surface data
     spacing: list
         the 3D image spacing
     RESOLUTION: float

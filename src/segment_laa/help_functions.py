@@ -2,7 +2,6 @@
 # Date: 2021-07-15
 
 import sys
-import SimpleITK as sitk
 import numpy as np
 from scipy import interpolate
 
@@ -11,7 +10,7 @@ from utilities import save_nrrd
 
 def get_cross(v1, v2):
     """
-    Get cross product of input vectors
+    Get cross product of input vectors.
     Parameters:
     -----------
     v1: np.ndarray
@@ -28,7 +27,7 @@ def get_cross(v1, v2):
 
 def get_distance(p1, p2, spacing):
     """
-    Get the distance between two points
+    Get the distance between two points.
     Parameters:
     -----------
     p1: np.ndarray
@@ -51,7 +50,7 @@ def get_distance(p1, p2, spacing):
 
 def get_length(ring, spacing):
     """
-    Get the length of the input ring
+    Get the length of the input ring.
     Parameters:
     -----------
     ring: np.ndarray
@@ -73,7 +72,7 @@ def get_length(ring, spacing):
 
 def get_resample(ring, num, z=None):
     """
-    Interpolate the ring with cubic spline and densely resample points on the ring
+    Interpolate the ring with cubic spline and densely resample points on the ring.
     Parameters:
     -----------
     ring: np.ndarray
@@ -97,7 +96,7 @@ def get_resample(ring, num, z=None):
 
 def get_norm(p):
     """
-    Get the vector norm
+    Get the vector norm.
     Parameters:
     -----------
     p: np.ndarray
@@ -112,7 +111,7 @@ def get_norm(p):
 
 def save_to_img(points, filename, shape, img, path):
     """
-    Save points to image
+    Save points to image.
     Parameters:
     -----------
     points: np.ndarray
